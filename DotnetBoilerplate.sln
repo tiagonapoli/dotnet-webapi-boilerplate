@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{F8E67E09-BE1E-404E-A740-CAB517287E5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telemetry.Test", "Telemetry.Test\Telemetry.Test.csproj", "{1EA2E47B-0E18-4D2C-BA70-9B441DF166B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8E67E09-BE1E-404E-A740-CAB517287E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E67E09-BE1E-404E-A740-CAB517287E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E67E09-BE1E-404E-A740-CAB517287E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E67E09-BE1E-404E-A740-CAB517287E5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA2E47B-0E18-4D2C-BA70-9B441DF166B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA2E47B-0E18-4D2C-BA70-9B441DF166B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA2E47B-0E18-4D2C-BA70-9B441DF166B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA2E47B-0E18-4D2C-BA70-9B441DF166B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
