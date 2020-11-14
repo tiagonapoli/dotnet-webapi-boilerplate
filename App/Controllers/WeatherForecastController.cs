@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using App.Telemetry;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -25,11 +24,10 @@ namespace App.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("foo/{id}")]
         public async Task<IEnumerable<WeatherForecast>> Get()
         {
             var rng = new Random();
-            await Foo();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -37,21 +35,6 @@ namespace App.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }
-
-        private static async Task Foo()
-        {
-            using var activity = TracerSingleton.Tracer.StartActivity("Foo");
-            activity?.SetTag("mock-tag", "mock-value");
-            await Task.Delay(1000);
-            
-            if (activity?.IsAllDataRequested == true)
-            {
-                activity?.AddEvent(new ActivityEvent("mock-event", default,
-                    new ActivityTagsCollection() {{"key1", "value1"}}));
-            }
-            
-            await Task.Delay(1000);
         }
     }
 }

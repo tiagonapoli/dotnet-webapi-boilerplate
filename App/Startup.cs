@@ -1,10 +1,10 @@
-using System;
-using App.Telemetry;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace App
 {
@@ -21,8 +21,22 @@ namespace App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            Console.WriteLine($"Environment: {EnvironmentConfigGetter.GetDeploymentEnvironment()}");
-            services.ConfigureTracer(TracerConfigurer.GetTracingConfiguration(Configuration));
+            var resource = Resources.CreateServiceResource("dotnet-playground", serviceVersion: "0.0.1");
+            services.AddOpenTelemetryTracing((builder) =>
+            {
+                builder
+                    .SetResource(resource)
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .SetSampler(new AlwaysOnSampler())
+                    // .AddOtlpExporter(opt =>
+                    // {
+                    //     opt.Endpoint = conf.LightstepIngesterEndpoint;
+                    //     opt.Headers = new Metadata {{"lightstep-access-token", conf.LightstepProjectToken}};
+                    //     opt.Credentials = new SslCredentials();
+                    // })
+                    .AddConsoleExporter();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +47,7 @@ namespace App
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<RequestMiddleware>();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -42,3 +57,4 @@ namespace App
         }
     }
 }
+
